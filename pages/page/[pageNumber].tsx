@@ -9,12 +9,17 @@ import type { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 const PhotoGridPage = ({
   results,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const [pictures, setPictures] = useState(getPhotoGridData(results));
+  const [filteredPictures, setFilteredPictures] = useState(
+    getPhotoGridData(results)
+  );
 
   return (
     <main className="lg:container mx-auto flex flex-col min-h-screen ">
-      <FilterForm pictures={pictures} setPictures={setPictures} />
-      <PictureGrid pictures={pictures} />
+      <FilterForm
+        pictures={getPhotoGridData(results)}
+        setPictures={setFilteredPictures}
+      />
+      <PictureGrid pictures={filteredPictures} />
     </main>
   );
 };
