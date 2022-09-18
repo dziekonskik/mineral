@@ -1,6 +1,6 @@
 export type PhotoGridEssentials = Pick<
   UnsplashResult,
-  "alt_description" | "blur_hash" | "description" | "likes" | "urls"
+  "alt_description" | "blur_hash" | "likes" | "urls" | "user"
 >;
 
 export interface UnsplashResponse {
@@ -9,7 +9,7 @@ export interface UnsplashResponse {
   results: UnsplashResult[];
 }
 
-interface UnsplashResult {
+export interface UnsplashResult {
   id: string;
   created_at: string;
   updated_at: string;
