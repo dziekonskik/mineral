@@ -16,20 +16,15 @@ interface UserMediaFormData {
 export const FilterForm = ({ pictures, setPictures }: FilterWrapperProps) => {
   const likesCeiling = Math.max(...pictures.map((picture) => picture.likes));
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useForm<UserMediaFormData>({
-    mode: "onSubmit",
-    defaultValues: {
-      searchText: "",
-      likesFrom: 0,
-      likesTo: likesCeiling,
-    },
-  });
+  const { register, handleSubmit, watch, setValue } =
+    useForm<UserMediaFormData>({
+      mode: "onSubmit",
+      defaultValues: {
+        searchText: "",
+        likesFrom: 0,
+        likesTo: likesCeiling,
+      },
+    });
   const handleSliderChange = (value: number[]) => {
     setValue("likesFrom", value[0]);
     setValue("likesTo", value[1]);
@@ -41,7 +36,9 @@ export const FilterForm = ({ pictures, setPictures }: FilterWrapperProps) => {
         const { likesFrom, likesTo, searchText } = data;
         const { likes, user } = picture;
 
-        const userNameIncludesSearchText = user.name.includes(searchText);
+        const userNameIncludesSearchText = user.name
+          .toLowerCase()
+          .includes(searchText.toLowerCase());
         const likesAreInSearchRange = likes >= likesFrom && likes <= likesTo;
 
         if (userNameIncludesSearchText && likesAreInSearchRange) {

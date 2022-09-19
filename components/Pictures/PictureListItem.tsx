@@ -10,7 +10,7 @@ interface PictureListItemProps {
 export const PictureListItem = ({ picture }: PictureListItemProps) => {
   return (
     <motion.li
-      className="list-none"
+      className="list-none relative"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
