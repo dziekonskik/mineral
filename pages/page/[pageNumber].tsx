@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { getPathsData } from "../../utils/pathsHelpers";
 import { PictureGrid } from "../../components/Pictures/PictureGrid";
 import { FilterForm } from "../../components/PicturesFilter/FilterForm";
+import { Pagination } from "../../components/Pagination/Pagination";
 import { getPhotoGridData } from "../../utils/functions";
-import { pagesCount } from "../../utils/constants";
+import { pageNumbersArray } from "../../utils/constants";
 import type { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 
 const PhotoGridPage = ({
@@ -12,14 +14,24 @@ const PhotoGridPage = ({
   const [filteredPictures, setFilteredPictures] = useState(
     getPhotoGridData(results)
   );
+  const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.query.pageNumber) {
+      setCurrentPage(Number(router.query.pageNumber));
+      setFilteredPictures(getPhotoGridData(results));
+    }
+  }, [router.query, results]);
 
   return (
-    <main className="lg:container mx-auto flex flex-col min-h-screen ">
+    <main className="lg:container mx-auto flex flex-col min-h-screen justify-between">
       <FilterForm
         pictures={getPhotoGridData(results)}
         setPictures={setFilteredPictures}
       />
       <PictureGrid pictures={filteredPictures} />
+      <Pagination currentPage={currentPage} />
     </main>
   );
 };
@@ -28,9 +40,7 @@ export default PhotoGridPage;
 
 export const getStaticPaths = async () => {
   return {
-    paths: Array.from({ length: pagesCount }, (_, i) => ({
-      params: { pageNumber: (i + 1).toString() },
-    })),
+    paths: pageNumbersArray,
     fallback: false,
   };
 };
