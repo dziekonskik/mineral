@@ -8,10 +8,10 @@ interface PhotoGridProps {
 
 export const PictureGrid = ({ pictures }: PhotoGridProps) => {
   return (
-    <section className="flex-1 px-4 lg:px-0 h-full relative">
+    <section className="flex-1 px-4 lg:px-0 h-full">
       <motion.ul
         layout
-        className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 h-full"
+        className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 h-full relative"
       >
         <AnimatePresence>
           {pictures.map((picture) => (

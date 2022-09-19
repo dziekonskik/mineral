@@ -25,7 +25,7 @@ const PhotoGridPage = ({
   }, [router.query, results]);
 
   return (
-    <main className="lg:container mx-auto flex flex-col min-h-screen justify-between">
+    <main className="lg:container mx-auto flex flex-col min-h-screen justify-between relative">
       <FilterForm
         pictures={getPhotoGridData(results)}
         setPictures={setFilteredPictures}
